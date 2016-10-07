@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">StressManagement</string>
+    <string name="label_facebook_login">Facebook Login</string>
+    <string name="label_google_login">Google Login</string>
+    <string name="label_email_login">Email Login</string>
+    <string name="label_sign_up">Sign Up</string>
+    <string name="facebook_app_id">1275427005830395</string>
+    <string name="login_with_google">Login with Google+</string>
+    <string name="login_with_facebook">Login with Facebook</string>
+
+</resources>

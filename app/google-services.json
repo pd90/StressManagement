@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "585592938294",
+    "firebase_url": "https://stressmanagement-8978b.firebaseio.com",
+    "project_id": "stressmanagement-8978b",
+    "storage_bucket": "stressmanagement-8978b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:585592938294:android:67126171c568261c",
+        "android_client_info": {
+          "package_name": "com.example.parasdhanta.stressmanagement"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "585592938294-r5aucegebaq16t16k7iiqa2kkrb5a5e4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.parasdhanta.stressmanagement",
+            "certificate_hash": "10CCC3B684547D2846D074A2C439B0C51604F9BC"
+          }
+        },
+        {
+          "client_id": "585592938294-5kncgmkl6bp8nvrl6ulobuuaicr7nf7t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD89n-SiywsNyp-HqU_b0l9mRX5q0gkOvo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "585592938294-5kncgmkl6bp8nvrl6ulobuuaicr7nf7t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
