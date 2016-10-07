@@ -8,5 +8,6 @@
     android:fitsSystemWindows="true"
     android:background="#E0E0E0"
     >
-   <include layout="@layout/soacil_login"/>
+
+   <include layout="@layout/social_login"/>
 </android.support.design.widget.CoordinatorLayout>

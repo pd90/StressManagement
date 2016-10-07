@@ -21,12 +21,6 @@ public class Utils {
         }
         return  instance;
     }
-/*    //method saves the user in the firebase database
-    public void saveUser(LoginUser userObject)
-    {
-        Firebase myFirebaseRef = new Firebase(Constants.FIREBASE_DB_URL);
-        myFirebaseRef = myFirebaseRef.child("users").child(userObject.getUserName());
-        if (userObject!=null)
-        myFirebaseRef.setValue(userObject);
-    }*/
+    // save profile data to shared preferences
+
 }

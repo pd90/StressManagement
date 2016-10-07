@@ -9,6 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/primary_dark"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.parasdhanta.stressmanagement.views.LoginActivity"
     tools:showIn="@layout/activity_main">
@@ -30,7 +31,9 @@
             android:orientation="vertical">
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:hintTextAppearance="@style/TextLabel"
+                >
 
                 <EditText
                     android:id="@+id/email"
@@ -38,15 +41,17 @@
                     android:layout_height="wrap_content"
                     android:hint="email"
                     android:inputType="textEmailAddress"
+                    android:focusableInTouchMode="true"
                     android:maxLines="1"
-                    android:singleLine="true"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/white" />
 
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:hintTextAppearance="@style/TextLabel"
+                >
 
                 <EditText
                     android:id="@+id/password"
@@ -58,8 +63,7 @@
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:singleLine="true"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/white" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -69,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@color/accent"
+                android:background="@color/primary"
                 android:text="Register"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
