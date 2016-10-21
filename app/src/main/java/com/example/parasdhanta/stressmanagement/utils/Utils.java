@@ -1,5 +1,9 @@
 package com.example.parasdhanta.stressmanagement.utils;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
+
 import com.example.parasdhanta.stressmanagement.constants.Constants;
 import com.example.parasdhanta.stressmanagement.pojos.LoginUser;
 
@@ -8,6 +12,7 @@ import com.example.parasdhanta.stressmanagement.pojos.LoginUser;
  */
 
 public class Utils {
+    private final String TAG = Utils.class.getSimpleName();
     private static Utils instance =null;
     private Utils()
     {
@@ -21,6 +26,16 @@ public class Utils {
         }
         return  instance;
     }
-    // save profile data to shared preferences
+    /* save profile data to shared preferences*/
+    public void saveUserProfileSharedPrefs(Context mContext,String prefType,Object object) {
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(prefType, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (object instanceof LoginUser) {
+            editor.putString(Constants.PREF_KEY_USERNAME, ((LoginUser) object).getUserName());
+            editor.putString(Constants.PREF_KEY_EMAIL, ((LoginUser) object).getEmailId());
+            editor.commit();
+            Log.d(TAG, "saved success");
+        }
 
+     }
 }

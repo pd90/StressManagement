@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">StressManagement</string>
+    <string name="app_name">S.A.D</string>
     <string name="label_facebook_login">Facebook Login</string>
     <string name="label_google_login">Google Login</string>
     <string name="label_email_login">Email Login</string>
@@ -7,5 +7,21 @@
     <string name="facebook_app_id">1275427005830395</string>
     <string name="login_with_google">Login with Google+</string>
     <string name="login_with_facebook">Login with Facebook</string>
+    <string name="login_text">Login</string>
+    <string name="signup_text">Sign Up</string>
+    <string name="register_with_email">Not a member? register with email</string>
+    <string name="already_member_login">Already a member? please login</string>
+
+
+    <string name="input_email">Please enter Email Id</string>
+    <string name="input_password">Please enter password</string>
+    <string name="wrong_emailid">Email-Id incorrect</string>
+    <string name="password_too_short">password too short</string>
+    <string name="sign_up">please sign up</string>
+    <string name="sign_up_error">Sorry! something went wrong</string>
+    <string name="sign_up_success_message">Registration successful,Please login</string>
+
+    <string name="splash_text">S.A.D</string>
+
 
 </resources>

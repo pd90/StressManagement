@@ -2,20 +2,27 @@ package com.example.parasdhanta.stressmanagement.views;
 
 import android.content.Intent;
 import android.content.IntentSender;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.parasdhanta.stressmanagement.R;
 import com.example.parasdhanta.stressmanagement.constants.Constants;
+import com.example.parasdhanta.stressmanagement.interfaces.login.EmailLoginView;
 import com.example.parasdhanta.stressmanagement.interfaces.login.FacebookLogin;
 import com.example.parasdhanta.stressmanagement.managers.BaseActivity;
 import com.example.parasdhanta.stressmanagement.pojos.LoginUser;
+import com.example.parasdhanta.stressmanagement.presenters.EmailLoginPresenter;
+import com.example.parasdhanta.stressmanagement.presenters.EmailLoginPresenterImpl;
+import com.example.parasdhanta.stressmanagement.utils.Utils;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -31,7 +38,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.plus.Plus;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -46,6 +52,8 @@ import java.util.Arrays;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Optional;
+import de.greenrobot.event.EventBus;
 
 
 /**
@@ -53,15 +61,22 @@ import butterknife.OnClick;
  */
 
 public class LoginActivity extends BaseActivity implements FacebookLogin,GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener  {
+        GoogleApiClient.OnConnectionFailedListener,EmailLoginView {
+
+
     private static final String TAG = LoginActivity.class.getSimpleName();
     private FirebaseAuth mAuth;
     private CallbackManager callbackManager;
     private Firebase myFirebaseRef;
-    @BindView(R.id.button_facebook_sign_in)
-    public Button fbLoginButton;
-    @BindView(R.id.login_with_google)
-    public SignInButton googleLoginButton;
+
+    @BindView(R.id.button_facebook_sign_in) public Button fbLoginButton;
+    @BindView(R.id.login_with_google) public SignInButton googleLoginButton;
+    @BindView(R.id.progressbar_signin) public ProgressBar progressBar;
+    @BindView(R.id.email) public EditText inputEmail;
+    @BindView(R.id.password) public EditText inputPassword;
+    @BindView(R.id.sign_in_button) public Button loginButton;
+    @BindView(R.id.sign_up) public Button signUpButton;
+
     /*client used to interact with google apis*/
     private GoogleApiClient mGoogleApiClient;
 
@@ -81,12 +96,18 @@ public class LoginActivity extends BaseActivity implements FacebookLogin,GoogleA
 
     private SignInButton mGoogleLoginButton;
 
+    LoginUser userObject;
+
+    /*Event bus object init*/
+
+    EventBus eventBus;
+
+    EmailLoginPresenter emailLoginPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
-        setContentView(R.layout.activity_main);
         mGoogleLoginButton = (SignInButton) findViewById(R.id.login_with_google);
         mGoogleLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,21 +117,51 @@ public class LoginActivity extends BaseActivity implements FacebookLogin,GoogleA
                 getGoogleOAuthTokenAndLogin();
             }
         });
+        Toast.makeText(getApplicationContext(),"create",Toast.LENGTH_SHORT).show();
+
     }
 
     //initialize facebook SDK Firebase db and butterknife here
     public void init() {
+        userObject = createUserObject();
+        eventBus = getEventBus();
         facebookSdkInit();
-        firebaseDbInit();
-        ButterKnife.bind(this);
+        mAuth = firebaseDbInit();
+        setContentView(R.layout.sign_in);
+        initButterKnife();
+        emailLoginPresenter = new EmailLoginPresenterImpl(this);
     }
     @Nullable
-    @OnClick(R.id.button_facebook_sign_in)
+    @Optional
+    @OnClick({R.id.button_facebook_sign_in,R.id.sign_in_button,R.id.sign_up})
     public void buttonClick(View v) {
+        if(v.getId()==R.id.button_facebook_sign_in) {
+            onFacebookLoginClicked();
 
-        onFacebookLoginClicked();
+        }
+        else if(v.getId()==R.id.sign_up) {
+            Intent intent  = new Intent(LoginActivity.this,SignUpActivity.class);
+            startActivity(intent);
+        }
+        else {
+            /*login with email and password*/
+
+            String emailId = inputEmail.getText().toString();
+            final String password = inputPassword.getText().toString();
+
+            if(TextUtils.isEmpty(emailId))
+            {
+                Toast.makeText(getApplicationContext(),R.string.input_email,Toast.LENGTH_LONG).show();
+                return;
+            }
+            if(TextUtils.isEmpty(password)){
+                Toast.makeText(getApplicationContext(),R.string.input_password,Toast.LENGTH_LONG).show();
+                return;
+            }
+            mainAppController.dismissKeyboard(this);
+            emailLoginPresenter.validateLoginCredentials(emailId,password,mAuth,LoginActivity.this);
+        }
     }
-
 
     @Override
     public void facebookSdkInit() {
@@ -134,13 +185,6 @@ public class LoginActivity extends BaseActivity implements FacebookLogin,GoogleA
             }
         });
 
-    }
-
-    @Override
-    public void firebaseDbInit() {
-        Firebase.setAndroidContext(this);
-        myFirebaseRef = new Firebase(Constants.FIREBASE_DB_URL);
-        mAuth = FirebaseAuth.getInstance();
     }
 
     //on facebook login button clicked
@@ -186,11 +230,10 @@ public class LoginActivity extends BaseActivity implements FacebookLogin,GoogleA
     }
     //Facebook save method
     public void saveFacebookData(FirebaseUser userData) {
-        LoginUser userObject = createUserObject();
+        userObject = createUserObject();
         userObject.setEmailId(userData.getEmail());
         userObject.setUserId(userData.getUid());
         userObject.setUserName(userData.getDisplayName());
-//      Utils.getInstance().saveUser(userObject);
     }
 
     @Override
@@ -198,6 +241,7 @@ public class LoginActivity extends BaseActivity implements FacebookLogin,GoogleA
         //method to check if the user is registered in the system, if logged in the user will be redirected to the main screen
         if (mAuth != null) {
             //open the next activity from here
+            Toast.makeText(getApplicationContext(),"logged in",Toast.LENGTH_LONG).show();
         }
     }
 
@@ -208,7 +252,19 @@ public class LoginActivity extends BaseActivity implements FacebookLogin,GoogleA
     }
 
     @Override
+    protected void onResume() {
+        //called when a dialog is closed and activity is resumed, otherwise on start of other activity called after onStart
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
     public void onStop() {
+        //called when activity completely goes out of focus
         super.onStop();
     }
 
@@ -223,6 +279,7 @@ public class LoginActivity extends BaseActivity implements FacebookLogin,GoogleA
             }
         }
         else {
+            //handle facebook result
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
@@ -230,14 +287,18 @@ public class LoginActivity extends BaseActivity implements FacebookLogin,GoogleA
     {
         GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
         GoogleSignInAccount acct = result.getSignInAccount();
-        String personName = acct.getDisplayName();
+        userObject.setUserName(acct.getDisplayName());
         String personGivenName = acct.getGivenName();
         String personFamilyName = acct.getFamilyName();
-        String personEmail = acct.getEmail();
+        userObject.setEmailId(acct.getEmail());
         String personId = acct.getId();
-        Uri personPhoto = acct.getPhotoUrl();
+        userObject.setImageUrl(String.valueOf(acct.getPhotoUrl()));
         firebaseAuthWithGoogle(acct);
+
+        //save profile data in shared prefs for further use
+        Utils.getInstance().saveUserProfileSharedPrefs(this,Constants.LOGIN_PREFERENCES,userObject);
     }
+
     //google
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         mAuth = FirebaseAuth.getInstance();
@@ -277,6 +338,7 @@ public class LoginActivity extends BaseActivity implements FacebookLogin,GoogleA
             }
         }
     }
+
     //google- helper method to resolve the current connection error
     public void resolveSignInError()
     {
@@ -293,6 +355,7 @@ public class LoginActivity extends BaseActivity implements FacebookLogin,GoogleA
              }
          }
     }
+
     //google- to get the Auth token in the background
     public void getGoogleOAuthTokenAndLogin()
     {
@@ -310,11 +373,59 @@ public class LoginActivity extends BaseActivity implements FacebookLogin,GoogleA
     //google
     @Override
     public void onConnected(@Nullable Bundle bundle) {
+
         getGoogleOAuthTokenAndLogin();
     }
     //google
     @Override
     public void onConnectionSuspended(int i) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
+    public void showProgress() {
+         progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showEmailError() {
+        Toast.makeText(getApplicationContext(),R.string.wrong_emailid,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showPasswordError() {
+        Toast.makeText(getApplicationContext(),R.string.password_too_short,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showAuthFailedError() {
+        Toast.makeText(getApplicationContext(),R.string.sign_up,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void navigateToOtherScr() {
+        // move to the next screen
+        Toast.makeText(getApplicationContext(),"login successful",Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showSignUpFailedError() {
+       // not required here
+    }
+
+    @Override
+    protected void onDestroy() {
+        emailLoginPresenter.onDestroy();
+        super.onDestroy();
     }
 }

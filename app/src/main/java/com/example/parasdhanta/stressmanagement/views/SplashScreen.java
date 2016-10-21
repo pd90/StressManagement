@@ -28,7 +28,6 @@ public class SplashScreen extends Activity {
         },2*1000);//wait for 2 seconds
 
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

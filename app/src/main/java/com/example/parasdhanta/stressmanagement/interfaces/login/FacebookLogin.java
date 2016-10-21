@@ -10,8 +10,6 @@ public interface FacebookLogin {
 
     public void facebookSdkInit();
 
-    public void firebaseDbInit();
-
     public void onFacebookLoginClicked();
 
     public void handleFaceboookAccessToken(AccessToken token);
