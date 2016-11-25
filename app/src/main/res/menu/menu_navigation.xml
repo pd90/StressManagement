@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/history"
+            android:title="@string/menu_option6"
+            />
+        <item
+            android:id="@+id/healthtips"
+            android:title="@string/menu_option9"
+            />
+        <item
+            android:id="@+id/settings"
+            android:title="@string/menu_option7"
+            />
+        <item
+            android:id="@+id/logout"
+            android:title="@string/menu_option8"
+            />
+    </group>
+
+</menu>

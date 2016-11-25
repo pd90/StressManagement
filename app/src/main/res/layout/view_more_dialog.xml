@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <TextView
+        android:text="@string/placeholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:textSize="25sp"
+        android:padding="8dp"
+        android:id="@+id/viewmore_dia_heading"/>
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="300dp"
+       android:layout_marginTop="10dp"
+   >
+       <android.support.v4.widget.NestedScrollView
+           android:layout_width="wrap_content"
+           android:fitsSystemWindows="true"
+           android:layout_height="300dp">
+    <TextView
+        android:text="@string/temp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:padding="10dp"
+        android:id="@+id/description_content" />
+       </android.support.v4.widget.NestedScrollView>
+
+  </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|top"
+            android:text="close"
+            android:textSize="20sp"
+            android:background="@null"
+            android:textColor="@color/colorAccent"
+            android:id="@+id/desc_dialog_close"
+            style="@style/buttonTheme"/>
+        </LinearLayout>
+</LinearLayout>

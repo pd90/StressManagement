@@ -8,6 +8,5 @@
     android:fitsSystemWindows="true"
     android:id="@+id/sign_in_coordinator_root"
     >
-   <include layout="@layout/toolbar"></include>
    <include layout="@layout/social_login"/>
 </android.support.design.widget.CoordinatorLayout>

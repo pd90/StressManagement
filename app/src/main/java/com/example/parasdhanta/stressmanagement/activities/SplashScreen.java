@@ -1,4 +1,4 @@
-package com.example.parasdhanta.stressmanagement.views;
+package com.example.parasdhanta.stressmanagement.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.example.parasdhanta.stressmanagement.R;
-import com.example.parasdhanta.stressmanagement.managers.BaseActivity;
 
 /**
  * Created by Paras Dhanta on 9/29/2016.
@@ -27,9 +26,5 @@ public class SplashScreen extends Activity {
             }
         },2*1000);//wait for 2 seconds
 
-    }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 }

@@ -2,18 +2,19 @@
     <resources>
 
     <color name="photo_tint">#7f101010</color>
-    <color name="colorText">#FFFFFF</color>
+    <color name="colorText">#000</color>
     <color name="google_color">#dd4b39</color>
     <!-- main theme-->
 
-    <color name="primary">#bec3c6</color>
-    <color name="primary_dark">#afaaae</color>
-    <color name="primary_light">#B3E5FC</color>
-    <color name="colorAccent">#971933</color>
+    <color name="primary">#4CAF50</color>
+    <color name="primary_dark">#388E3C</color>
+    <color name="primary_light">#C8E6C9</color>
+    <color name="colorAccent">#8BC34A</color>
     <color name="primary_text">#212121</color>
     <color name="secondary_text">#757575</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
+
 
 </resources>
 

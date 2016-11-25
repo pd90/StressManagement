@@ -23,5 +23,42 @@
 
     <string name="splash_text">S.A.D</string>
 
+    <!--menu items for option menu -->
+    <string name="menu_option_home">Home</string>
+
+    <string name="menu_option1">Stress Questionnaire</string>
+
+    <string name="menu_option2">Depression Questionnaire</string>
+
+    <string name="menu_option3">Anxiety Questionnaire</string>
+
+    <string name="menu_option4">personality Disorder Questionnaire</string>
+
+    <string name="menu_option5">OCD Questionnaire</string>
+
+    <string name="menu_option6">Tips</string>
+
+    <string name="menu_option7">Settings</string>
+
+    <string name="menu_option8">Logout</string>
+
+    <string name="menu_option9">History</string>
+
+
+    <string name="closeDrawer">Navigation View</string>
+    <string name="openDrawer">Navigation View Closed</string>
+
+
+    <string name="temp">This is probably the most important tweak you can make to....
+
+    </string>
+
+    <string name="content_fragment_str1">What is </string>
+
+    <string name="content_fragment_str2">Causes of </string>
+
+    <string name="content_fragment_str3">Symptoms of </string>
+
+    <string name="placeholder">placeholder?</string>
 
 </resources>

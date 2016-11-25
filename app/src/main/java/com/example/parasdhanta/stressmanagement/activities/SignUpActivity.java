@@ -1,9 +1,10 @@
-package com.example.parasdhanta.stressmanagement.views;
+package com.example.parasdhanta.stressmanagement.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,15 +40,35 @@ public class SignUpActivity extends BaseActivity implements EmailLoginView{
     EmailLoginPresenter emailLoginPresenter;
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return false;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return false;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
     }
 
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.sign_up;
+    }
+
+    @Override
+    protected void setAppToolBar() {
+
+    }
+
     public void init()
     {
         mainAppController.addActivity(this);
-        setContentView(R.layout.sign_up);
+        setContentView(getLayoutResource());
         initButterKnife();
         mAuth = firebaseDbInit();
         emailLoginPresenter = new EmailLoginPresenterImpl(this);

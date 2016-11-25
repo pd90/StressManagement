@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activities.HomeScreenActivity">
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/menu_option7"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/home_logout"
+        android:orderInCategory="200"
+        android:title="@string/menu_option8"
+        app:showAsAction="never" />
+
+</menu>

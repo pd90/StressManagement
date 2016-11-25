@@ -30,5 +30,16 @@
         <item name="colorControlActivated">#fff</item>
         <item name="colorControlHighlight">#000</item>
     </style>
+
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">#546E7A</item>
+        <item name="android:textColorPrimary">#37474F</item>
+        <item name="android:background">#fff</item>
+    </style>
+
+    <style name="buttonTheme" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/primary_light</item>
+        <item name="colorButtonNormal">@color/colorAccent</item>
+    </style>
 </resources>
 

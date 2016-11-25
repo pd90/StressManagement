@@ -18,16 +18,14 @@ public class ActivityController implements ActivityAddPopInterface {
     //arraylist of all the activity instances
     static ArrayList<BaseActivity> allActivityList;
 
-    private ActivityController()
-    {
+    private ActivityController() {
         //for singleton purpose non instantiable
     }
+
     @Nullable
-    public synchronized static ActivityController getInstance()
-    {
+    public synchronized static ActivityController getInstance() {
         allActivityList = new ArrayList<BaseActivity>();
-        if(instance!=null)
-        {
+        if (instance != null) {
             return instance;
         }
         return null;
@@ -35,6 +33,7 @@ public class ActivityController implements ActivityAddPopInterface {
 
     /**
      * this method adds the current activity to the arraylist
+     *
      * @param activity
      */
     @Override
@@ -44,11 +43,12 @@ public class ActivityController implements ActivityAddPopInterface {
 
     /**
      * this method finishes the current activity that has been passed to it
+     *
      * @param activity
      */
     @Override
     public void finishCurrentActivity(BaseActivity activity) {
-         activity.finish();
+        activity.finish();
     }
 
     /**
@@ -56,12 +56,15 @@ public class ActivityController implements ActivityAddPopInterface {
      */
     @Override
     public void destroyApplicationForcefully() {
-       //TO-DO
+        //TO-DO
     }
+
     public void dismissKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (null != activity.getCurrentFocus())
             imm.hideSoftInputFromWindow(activity.getCurrentFocus()
                     .getApplicationWindowToken(), 0);
     }
+
+
 }

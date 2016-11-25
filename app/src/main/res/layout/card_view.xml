@@ -1,0 +1,25 @@
+<android.support.v7.widget.CardView
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:id="@+id/card"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    card_view:cardCornerRadius="10dp"
+    card_view:cardElevation="2dp"
+    card_view:cardUseCompatPadding="true">
+
+    <TextView
+        android:id="@+id/tv_home_list"
+        android:layout_margin="15dp"
+        android:layout_gravity="start|center_horizontal|clip_vertical"
+        android:textSize="18sp"
+        android:layout_width="match_parent"
+        android:text="@string/placeholder"
+        android:textColor="@color/colorText"
+        android:layout_height="match_parent"
+        android:textStyle="bold" />
+
+</android.support.v7.widget.CardView>
